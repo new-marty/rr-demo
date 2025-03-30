@@ -1,22 +1,22 @@
 // Import core ESLint utilities and configs
-import globals from "globals";
-import eslint from "@eslint/js";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import globals from 'globals';
+import eslint from '@eslint/js';
+import js from '@eslint/js';
+import { FlatCompat } from '@eslint/eslintrc';
 
 // Import TypeScript ESLint
-import tseslint from "typescript-eslint";
-import { plugin as typescriptPlugin } from "typescript-eslint";
+import tseslint from 'typescript-eslint';
+import { plugin as typescriptPlugin } from 'typescript-eslint';
 
 // Import React-related plugins
-import reactPlugin from "eslint-plugin-react";
-import reactRecommended from "eslint-plugin-react/configs/recommended.js";
-import reactJSXRuntime from "eslint-plugin-react/configs/jsx-runtime.js";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
-import jsxA11yPlugin from "eslint-plugin-jsx-a11y";
+import reactPlugin from 'eslint-plugin-react';
+import reactRecommended from 'eslint-plugin-react/configs/recommended.js';
+import reactJSXRuntime from 'eslint-plugin-react/configs/jsx-runtime.js';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import jsxA11yPlugin from 'eslint-plugin-jsx-a11y';
 
 // Import other plugins
-import importPlugin from "eslint-plugin-import";
+import importPlugin from 'eslint-plugin-import';
 
 // Initialize compatibility layer
 const compat = new FlatCompat();
@@ -26,12 +26,12 @@ const compat = new FlatCompat();
  * Includes global settings and ignores
  */
 const baseConfig = {
-  ignores: ["node_modules", ".cache", "build", "public/build", ".env"],
+  ignores: ['node_modules', '.cache', 'build', 'public/build', '.env'],
   ...eslint.configs.recommended,
   ...js.configs.recommended,
   languageOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
     globals: {
       ...globals.browser,
       ...globals.commonjs,
@@ -51,7 +51,7 @@ const baseConfig = {
  * Includes React-specific rules and settings
  */
 const reactConfig = {
-  files: ["**/*.{js,jsx,ts,tsx}"],
+  files: ['**/*.{js,jsx,ts,tsx}'],
   ...reactRecommended,
   ...reactJSXRuntime,
   rules: {
@@ -64,7 +64,7 @@ const reactConfig = {
   },
   plugins: {
     react: reactPlugin,
-    ["jsx-a11y"]: jsxA11yPlugin,
+    ['jsx-a11y']: jsxA11yPlugin,
   },
   extends: [
     ...compat.config(reactHooksPlugin.configs.recommended),
@@ -72,18 +72,17 @@ const reactConfig = {
   ],
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
-    formComponents: ["Form"],
+    formComponents: ['Form'],
     linkComponents: [
-      { name: "Link", linkAttribute: "to" },
-      { name: "NavLink", linkAttribute: "to" },
+      { name: 'Link', linkAttribute: 'to' },
+      { name: 'NavLink', linkAttribute: 'to' },
     ],
-    "import/resolver": {
+    'import/resolver': {
       typescript: true,
     },
   },
-  ignores: [".react-router/**/*"],
 };
 
 /**
@@ -91,9 +90,9 @@ const reactConfig = {
  * Combines TypeScript-specific rules, imports, and settings
  */
 const typescriptConfig = {
-  files: ["**/*.{ts,tsx}"],
+  files: ['**/*.{ts,tsx}'],
   plugins: {
-    ["@typescript-eslint"]: typescriptPlugin,
+    ['@typescript-eslint']: typescriptPlugin,
     import: importPlugin,
   },
   extends: [
@@ -101,35 +100,23 @@ const typescriptConfig = {
     ...compat.config(importPlugin.configs.recommended),
     ...compat.config(importPlugin.configs.typescript),
   ],
-  settings: {
-    "import/internal-regex": "^~/",
-    "import/resolver": {
-      typescript: {
-        project: "../tsconfig.json",
-        alwaysTryTypes: true,
-      },
-      node: {
-        extensions: [".ts", ".tsx"],
-      },
-    },
-  },
   rules: {
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
+    'no-unused-vars': 'off',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
       {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_",
-        destructuredArrayIgnorePattern: "^_",
+        argsIgnorePattern: '^_',
+        varsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
       },
     ],
-    "import/no-dynamic-require": "warn",
-    "import/no-nodejs-modules": "warn",
+    'import/no-dynamic-require': 'warn',
+    'import/no-nodejs-modules': 'warn',
   },
   languageOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
 };
 
@@ -137,12 +124,19 @@ const typescriptConfig = {
  * Configuration specific to the ESLint config file itself
  */
 const configForEslintConfigFile = {
-  files: ["eslint.config.js"],
+  files: ['eslint.config.js'],
   languageOptions: {
     globals: {
       ...globals.node,
     },
   },
+};
+
+/**
+ * Configuration to explicitly ignore .react-router directory
+ */
+const ignoreReactRouterConfig = {
+  ignores: ['.react-router/**'],
 };
 
 /**
@@ -152,5 +146,6 @@ export default tseslint.config(
   baseConfig,
   reactConfig,
   typescriptConfig,
-  configForEslintConfigFile
+  configForEslintConfigFile,
+  ignoreReactRouterConfig
 );
