@@ -1,6 +1,5 @@
 import type { Route } from './+types/home';
 
-// Lint error here
 // export function meta({}: Route.MetaArgs) {
 export function meta() {
   return [
