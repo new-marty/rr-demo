@@ -1,6 +1,5 @@
 import type { Route } from './+types/home';
 
-// Error here
 // export function meta({}: Route.MetaArgs) {
 export function meta() {
   return [
