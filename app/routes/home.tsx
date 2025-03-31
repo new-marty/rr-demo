@@ -1,7 +1,7 @@
 import type { Route } from './+types/home';
 
-// export function meta({}: Route.MetaArgs) {
-export function meta() {
+export function meta({}: Route.MetaArgs) {
+  // export function meta() {
   return [
     { title: 'New Webapp' },
     { name: 'description', content: 'Welcome to New Webapp!' },
