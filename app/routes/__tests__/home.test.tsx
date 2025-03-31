@@ -5,6 +5,10 @@ describe('Basic tests', () => {
     expect(1 + 1).toBe(2);
   });
 
+  // it('should pass a simple equality test', () => {
+  //   expect(1 + 1).toBe(3);
+  // });
+
   it('should fail a simple inequality test', () => {
     expect(1 + 1 === 1).toBe(false);
   });
